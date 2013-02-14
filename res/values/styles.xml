@@ -1,0 +1,23 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="Theme.Sherlock">
+        <item name="tableRoundsHeaderRef">@style/TableRounds.Header</item>
+        <item name="tableRoundsRowRef">@style/TableRounds.Row</item>
+        <item name="tableRoundsRowFirstRef">@style/TableRounds.Row.First</item>
+        <item name="tableRoundsFooterRef">@style/TableRounds.Footer</item>
+    </style>
+    <style name="TableRounds" parent="@android:style/TextAppearance.Small">
+    </style>   
+    <style name="TableRounds.Header">
+        <item name="android:textStyle">bold</item>        
+    </style>
+    <style name="TableRounds.Row"> 
+    </style>
+    <style name="TableRounds.Row.First">
+        <item name="android:textStyle">bold</item>        
+    </style>        
+    <style name="TableRounds.Footer">
+        <item name="android:textStyle">bold</item>        
+    </style>    
+
+</resources>

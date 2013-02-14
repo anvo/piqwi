@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    
+    
+    <item android:id="@+id/menu_list_players_up" android:title="Hoch" android:orderInCategory="10"></item><item android:id="@+id/menu_list_players_down" android:title="Runter" android:orderInCategory="20"></item><item android:id="@+id/menu_list_players_edit" android:title="Bearbeiten" android:orderInCategory="29"></item><item android:id="@+id/menu_list_players_delete" android:title="Löschen" android:orderInCategory="30"></item>
+    
+    
+
+</menu>

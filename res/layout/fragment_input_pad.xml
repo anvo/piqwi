@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    tools:context=".GameActivity" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.6"
+        android:orientation="vertical"
+        android:weightSum="1" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:weightSum="1" >
+
+            <LinearLayout
+                android:id="@+id/LinearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:weightSum="1" >
+
+                <Button
+                    android:id="@+id/input_button2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:text="2" />
+
+                <Button
+                    android:id="@+id/input_button4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:text="4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:weightSum="1" >
+
+                <Button
+                    android:id="@+id/input_button3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:text="3" />
+
+                <Button
+                    android:id="@+id/input_button5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:text="5" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/input_button12"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:text="12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.4"
+        android:orientation="vertical"
+        android:weightSum="1" >
+
+        <Button
+            android:id="@+id/input_buttonc"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:text="C" />
+
+        <Button
+            android:id="@+id/input_buttonok"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:text="OK" />
+    </LinearLayout>
+
+</LinearLayout>

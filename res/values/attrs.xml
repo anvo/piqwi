@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="AppTheme">
+		<attr name="tableRoundsHeaderRef" format="reference" />
+		<attr name="tableRoundsRowRef" format="reference" /> 
+		<attr name="tableRoundsRowFirstRef" format="reference" /> 
+		<attr name="tableRoundsFooterRef" format="reference" />  
+	</declare-styleable>    
+</resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rounds_table_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="4dp" >
+
+    <TableLayout
+        android:id="@+id/rounds_table"
+        style="@style/TableRounds.Header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/rounds_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/TableRounds.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Runde" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TableRounds.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/unknownName" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/TableRounds.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/unknownName" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rounds_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/TableRounds.Row.First"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/TableRounds.Row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+                android:id="@+id/textView9"
+                style="@style/TableRounds.Row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rounds_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/TableRounds.Footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="=" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/TableRounds.Footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/TableRounds.Footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+        </TableRow>
+    </TableLayout>
+
+</ScrollView>
