@@ -29,10 +29,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.github.anvo.piqwi.R;
-import com.github.anvo.piqwi.R.id;
-import com.github.anvo.piqwi.R.layout;
-import com.github.anvo.piqwi.R.menu;
-import com.github.anvo.piqwi.R.string;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.fragments.InputFragment;
@@ -58,14 +54,17 @@ import android.widget.Toast;
 
 public class GameActivity extends SherlockFragmentActivity {
 	
-	private final int PLAYERS_TAB = 0;
-	private final int INPUT_TAB = 1;
-	private final int ROUNDS_TAB = 2;
-	private final int RESULT_TAB = 3;
+	public final static int PLAYERS_TAB = 0;
+	public final static int INPUT_TAB = 1;
+	public final static int ROUNDS_TAB = 2;
+	public final static int RESULT_TAB = 3;
 	
 	private final String GAME_SAVE_FILE = "GameSave";
 	
 	public final static String ACTION_GAME_RESTART = "com.github.anvo.piqwi.ACTION_GAME_RESTART";
+	public final static String ACTION_PAGE_SELECTED = "com.github.anvo.piqwi.ACTION_PAGE_SELECTED";
+	
+	public final static String EXTRA_PAGE_POSITION = "com.github.anvo.piqwi.EXTRA_PAGE_POSITION";
 	
 	private Game game = new Game();
 	
@@ -99,8 +98,9 @@ public class GameActivity extends SherlockFragmentActivity {
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
 			@Override
 			public void onPageSelected(int position) {
-				if(ROUNDS_TAB == position)
-					((RoundsFragment)mSectionsPagerAdapter.getItem(position)).update();
+				Intent pageSelected = new Intent(GameActivity.ACTION_PAGE_SELECTED);
+				pageSelected.putExtra(GameActivity.EXTRA_PAGE_POSITION, position);
+				LocalBroadcastManager.getInstance(GameActivity.this).sendBroadcastSync(pageSelected);
 			}});
         
         this.loadGame();

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rounds_table_scroll"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rounds_table"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="4dp" >
 
     <TableLayout
-        android:id="@+id/rounds_table"
-        style="@style/TableRounds.Header"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/rounds_table_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="8dp"
         android:shrinkColumns="*"
         android:stretchColumns="*" >
 
         <TableRow
-            android:id="@+id/rounds_header"
-            android:layout_width="match_parent"
+            android:id="@+id/rounds_table_header_row"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
             <TextView
@@ -23,77 +26,73 @@
                 style="@style/TableRounds.Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Runde" />
+                android:minWidth="24dp"
+                android:text="#" />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/TableRounds.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peter" />
 
             <TextView
                 android:id="@+id/textView3"
                 style="@style/TableRounds.Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@android:string/unknownName" />
+                android:text="Marion" />
+
+        </TableRow>
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/rounds_table_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rounds_table_footer"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rounds_table_header"
+        tools:listitem="@layout/fragment_rounds_body_item" >
+    </ListView>
+
+    <TableLayout
+        android:id="@+id/rounds_table_footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <com.github.anvo.piqwi.ui.CopyWidthTableRow
+            android:id="@+id/rounds_table_footer_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp" >
 
             <TextView
                 android:id="@+id/textView4"
-                style="@style/TableRounds.Header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@android:string/unknownName" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/rounds_row"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/TableRounds.Row.First"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView8"
-                style="@style/TableRounds.Row"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-
-            <TextView
-                android:id="@+id/textView9"
-                style="@style/TableRounds.Row"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/rounds_footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView5"
                 style="@style/TableRounds.Footer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="=" />
 
             <TextView
+                android:id="@+id/textView5"
+                style="@style/TableRounds.Footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="234" />
+
+            <TextView
                 android:id="@+id/textView6"
                 style="@style/TableRounds.Footer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0" />
+                android:text="178" />
 
-            <TextView
-                android:id="@+id/textView7"
-                style="@style/TableRounds.Footer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-        </TableRow>
+        </com.github.anvo.piqwi.ui.CopyWidthTableRow>
     </TableLayout>
 
-</ScrollView>
+</RelativeLayout>

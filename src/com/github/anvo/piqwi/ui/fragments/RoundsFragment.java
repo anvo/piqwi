@@ -27,28 +27,35 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
+import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
-import com.github.anvo.piqwi.logic.Round;
-import com.github.anvo.piqwi.logic.Value;
+import com.github.anvo.piqwi.ui.CopyWidthTableRow;
 import com.github.anvo.piqwi.ui.GameActivity;
+import com.github.anvo.piqwi.ui.RoundListAdapter;
 
 public class RoundsFragment extends SherlockFragment {
 	
-	private TableLayout table = null;
 	private Game game = null;
 	private BroadcastReceiver broadcastReceiver = null;
-	
+	private ListView list = null;
+	private TableRow header = null;
+	private CopyWidthTableRow footer = null;
+	private RoundListAdapter listAdapter = null;
+		
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_rounds, container, false);
-        this.table = (TableLayout) v.findViewById(R.id.rounds_table);
+        this.list = (ListView) v.findViewById(R.id.rounds_table_body);
+        this.header = (TableRow) v.findViewById(R.id.rounds_table_header_row);
+        this.footer = (CopyWidthTableRow) v.findViewById(R.id.rounds_table_footer_row);
+        this.footer.setSource(this.header);
         return v;
     }
     
@@ -56,21 +63,29 @@ public class RoundsFragment extends SherlockFragment {
     public void onActivityCreated(Bundle savedInstanceState)
     {
     	super.onActivityCreated(savedInstanceState);
+    	this.setRetainInstance(true);
     	
     	this.game = ((GameActivity)this.getActivity()).getGame();
-    	this.updateTable();
+    	this.listAdapter = new RoundListAdapter(this.getActivity(), this.game, this.header);
+        list.setAdapter(this.listAdapter);    	
+
+    	this.update();
     	
     	//Receive game restart intent
     	this.broadcastReceiver   = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				if(GameActivity.ACTION_GAME_RESTART.equals(intent.getAction()))
-					RoundsFragment.this.updateTable();
+					update();
+				else if(GameActivity.ACTION_PAGE_SELECTED.equals(intent.getAction()) && GameActivity.ROUNDS_TAB == intent.getIntExtra(GameActivity.EXTRA_PAGE_POSITION, -1))
+					update();
 			}};
-    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, new IntentFilter(GameActivity.ACTION_GAME_RESTART));
+		IntentFilter filter =  new IntentFilter(GameActivity.ACTION_GAME_RESTART);
+		filter.addAction(GameActivity.ACTION_PAGE_SELECTED);
+    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, filter);
     	    	
     }
-    
+        
     @Override
     public void onStop()
     {
@@ -78,109 +93,49 @@ public class RoundsFragment extends SherlockFragment {
     	LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.broadcastReceiver);
     }
     
+    
     public void update()
-    {    	
-    	if(this.table != null)
-    		this.updateTable();
-    }
-    
-    private void updateTable()
     {
-    	this.updateTableHeader();
-    	
-    	for(int i=0; i < this.game.getRounds().size(); i++)
-    	{
-    		TableRow row = (TableRow) this.table.getChildAt(i +1); //First row is header
-    		if(row == null || this.table.getChildCount() <= 2+i) //Header + Footer
-    		{
-    			row = new TableRow(this.getActivity());
-    			TableRow footer = (TableRow) this.table.getChildAt(this.table.getChildCount() -1);
-    			this.table.removeView(footer);
-    			this.table.addView(row);
-    			this.table.addView(footer);
-    		}
-    		this.updateTableRow(row, this.game.getRounds().get(i),i);
-    	}
-    	//Delete remaining rows
-    	final int rowsVisible = this.table.getChildCount() - 2; //Exclude header, footer
-    	if(rowsVisible > this.game.getRounds().size())
-    		this.table.removeViews(this.game.getRounds().size() +1, rowsVisible - this.game.getRounds().size());
-    	
-    	this.updateTableFooter();
+		this.updateHeader();
+		this.listAdapter.notifyDataSetChanged();
+		this.updateFooter();
     }
     
-    private void updateTableFooter() {
-    	TableRow footer = (TableRow) this.table.findViewById(R.id.rounds_footer);
-    	
+    protected void updateHeader()
+    {
     	//Update current elements
     	for(int i=0; i < this.game.getPlayers().size(); i++)
     	{
     		Player p = this.game.getPlayers().get(i);
-    		TextView v = (TextView) footer.getVirtualChildAt(i + 1);//First element is not used
-    		if(v == null)
-    		{
-    			v = new TextView(this.getActivity(), null, R.attr.tableRoundsFooterRef);
-    			footer.addView(v);
-    		}
-    		v.setText(Integer.toString(this.game.getResultFor(p)));
-    	}
-    	//Delete remaining elements
-    	final int playersVisible =  footer.getVirtualChildCount()-1;
-    	if(playersVisible > this.game.getPlayers().size())
-    		footer.removeViews(playersVisible + 1, playersVisible - playersVisible);
-	}
-
-	private void updateTableHeader()
-    {
-    	TableRow header = (TableRow) this.table.findViewById(R.id.rounds_header);
-    	
-    	//Update current elements
-    	for(int i=0; i < this.game.getPlayers().size(); i++)
-    	{
-    		Player p = this.game.getPlayers().get(i);
-    		TextView v = (TextView) header.getVirtualChildAt(i + 1);//First element is not used
+    		TextView v = (TextView) this.header.getVirtualChildAt(i + 1);//First element is not used
     		if(v == null)
     		{
     			v = new TextView(this.getActivity(),null, R.attr.tableRoundsHeaderRef);
-    			header.addView(v);
+    			this.header.addView(v);
     		}
     		v.setText(p.getName());
     	}
     	//Delete remaining elements
-    	for(int i=this.game.getPlayers().size(); i < header.getVirtualChildCount()-1; i++)
-    		header.removeViewAt(i+1); 
+    	for(int i=this.game.getPlayers().size(); i < this.header.getVirtualChildCount()-1; i++)
+    		this.header.removeViewAt(i+1); 
     }
-	
-	private void updateTableRow(TableRow row, Round round, int index)
-	{
-		TextView numRound = (TextView) row.getVirtualChildAt(0);
-		if(numRound == null)
-		{
-			numRound = new TextView(this.getActivity(),null, R.attr.tableRoundsRowFirstRef);
-			row.addView(numRound);
-		}
-		numRound.setText(Integer.toString(index + 1));
-
+    
+    protected void updateFooter()
+    {
     	//Update current elements
     	for(int i=0; i < this.game.getPlayers().size(); i++)
     	{
     		Player p = this.game.getPlayers().get(i);
-    		Value value = round.getValueFor(p);
-    		TextView v = (TextView) row.getVirtualChildAt(i + 1);//First element is not used
+    		TextView v = (TextView) this.footer.getVirtualChildAt(i + 1);//First element is not used
     		if(v == null)
     		{
-    			v = new TextView(this.getActivity(), null, R.attr.tableRoundsRowRef);
-    			row.addView(v);
+    			v = new TextView(this.getActivity(),null, R.attr.tableRoundsFooterRef);
+    			this.footer.addView(v);
     		}
-    		if(value != null)
-    			v.setText(Integer.toString(value.getSum()));
-    		else
-    			v.setText("");
+    		v.setText(Integer.toString(this.game.getResultFor(p)));
     	}
     	//Delete remaining elements
-    	final int playersVisible =  row.getVirtualChildCount()-1;
-    	if(playersVisible > this.game.getPlayers().size())
-    		row.removeViews(playersVisible + 1, playersVisible - playersVisible);    	
-	}
-
+    	for(int i=this.game.getPlayers().size(); i < this.footer.getVirtualChildCount()-1; i++)
+    		this.footer.removeViewAt(i+1);
+    }
 }

@@ -6,18 +6,16 @@
         <item name="tableRoundsRowFirstRef">@style/TableRounds.Row.First</item>
         <item name="tableRoundsFooterRef">@style/TableRounds.Footer</item>
     </style>
-    <style name="TableRounds" parent="@android:style/TextAppearance.Small">
+    <style name="TableRounds" parent="@android:style/TextAppearance.Large">
     </style>   
-    <style name="TableRounds.Header">
-        <item name="android:textStyle">bold</item>        
+    <style name="TableRounds.Header">        
     </style>
     <style name="TableRounds.Row"> 
     </style>
     <style name="TableRounds.Row.First">
         <item name="android:textStyle">bold</item>        
     </style>        
-    <style name="TableRounds.Footer">
-        <item name="android:textStyle">bold</item>        
+    <style name="TableRounds.Footer">  
     </style>    
 
 </resources>
