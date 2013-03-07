@@ -19,13 +19,19 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 package com.github.anvo.piqwi.ui.fragments;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -36,12 +42,15 @@ import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.GameActivity;
+import com.github.anvo.piqwi.ui.PlayerListActionMode;
 import com.github.anvo.piqwi.ui.PlayerListAdapter;
 
 public class PlayersFragment extends SherlockFragment {
 
 	private Game game = null;
 	private PlayerListAdapter playersAdapter = null;
+	private PlayerListActionMode action = null;
+	private BroadcastReceiver broadcastReceiver = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -54,7 +63,6 @@ public class PlayersFragment extends SherlockFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_players, container, false);
-
         return v;
     }
     
@@ -66,11 +74,39 @@ public class PlayersFragment extends SherlockFragment {
     	this.game = ((GameActivity)this.getActivity()).getGame();
     	
     	this.playersAdapter = new PlayerListAdapter(this.getActivity(), this.game.getPlayers());
-    	ListView players = (ListView) this.getActivity().findViewById(R.id.list_players);
+    	final ListView players = (ListView) this.getActivity().findViewById(R.id.list_players);
     	players.setAdapter(playersAdapter);
+    	players.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+				action = new PlayerListActionMode(getActivity(), game, playersAdapter, position,players);
+				getSherlockActivity().startActionMode(action);
+				return true;
+			}});	
+    	players.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				if(action != null && action.isActive())
+					action.updatePosition(position);
+			}});
     	
-    	this.registerForContextMenu(players);    	
+    	this.broadcastReceiver   = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if(GameActivity.ACTION_PAGE_SELECTED.equals(intent.getAction()))
+					if(action != null && action.isActive())
+						action.finish();
+			}};
+    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, new IntentFilter(GameActivity.ACTION_PAGE_SELECTED));
+    	    	
     }
+    
+    public void onStop ()
+    {
+    	super.onStop();
+    	LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.broadcastReceiver);
+    }    
     
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
@@ -105,66 +141,5 @@ public class PlayersFragment extends SherlockFragment {
     			return true;
     	}
         return false;
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
-    {
-    	super.onCreateContextMenu(menu, v, menuInfo);
-    	this.getActivity().getMenuInflater().inflate(R.menu.list_players, menu);
-    }
-    
-    @Override
-    public boolean onContextItemSelected (android.view.MenuItem item)
-    {
-    	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-    	switch(item.getItemId())
-    	{
-    		case R.id.menu_list_players_delete:
-    			this.game.getPlayers().remove(info.position);
-    			break;
-    		case R.id.menu_list_players_up:
-    			if(info.position > 0)
-    				this.swapPlayers(info.position -1, info.position);
-    			break;
-    		case R.id.menu_list_players_down:
-    			if(info.position < (this.game.getPlayers().size() -1))
-    				this.swapPlayers(info.position +1, info.position);
-    			break;   	
-    		case R.id.menu_list_players_edit:
-    			final int playerId = info.position;
-    			Player player = this.game.getPlayers().get(playerId);
-    			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-    			final View layout = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_player, null);
-    			((EditText) layout.findViewById(R.id.dialog_player_name)).setText(player.getName()); 
-    			builder.setView(layout);
-    			builder.setTitle("Spieler: " + player.getName());
-    			builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						EditText nameText = (EditText) layout.findViewById(R.id.dialog_player_name); 
-						String name = nameText.getText().toString();
-						if(!name.isEmpty())
-						{
-							game.getPlayers().get(playerId).setName(name);
-							playersAdapter.notifyDataSetChanged();
-						}
-					}
-				});
-    			builder.setNegativeButton(android.R.string.cancel, null);
-    			builder.create().show();    			
-    			break;
-    		default:
-    			return super.onContextItemSelected(item);
-    	}
-    	this.playersAdapter.notifyDataSetChanged();
-    	return true;
-    }
-    
-    protected void swapPlayers(int newIndex, int oldIndex)
-    {
-    	Player tmp = this.game.getPlayers().get(newIndex);
-    	this.game.getPlayers().set(newIndex, this.game.getPlayers().get(oldIndex));
-    	this.game.getPlayers().set(oldIndex, tmp);
     }
 }

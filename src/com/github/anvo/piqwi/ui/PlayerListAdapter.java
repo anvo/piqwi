@@ -20,6 +20,7 @@ package com.github.anvo.piqwi.ui;
 
 import java.util.List;
 
+import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Player;
 
 import android.content.Context;
@@ -27,12 +28,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.CheckedTextView;
 
 public class PlayerListAdapter extends BaseAdapter {
 
 	private List<Player> list = null;
 	private Context context = null;
+	private boolean selectionMode = false;
 	
 	public PlayerListAdapter(Context c, List<Player> list)
 	{
@@ -66,19 +68,25 @@ public class PlayerListAdapter extends BaseAdapter {
 		if(convertView == null)
 		{
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+			convertView = inflater.inflate(android.R.layout.simple_list_item_single_choice, parent, false);
 		}		
 		return this.populateView(position, convertView);
+	}
+	
+	public void setSelectionMode(boolean state)
+	{
+		this.selectionMode = state;
 	}
 	
 	protected View populateView(int position, View convertView)
 	{
 		Player player = (Player)this.getItem(position);
-		TextView text1 = (TextView)convertView.findViewById(android.R.id.text1);
-		
-		text1.setText(player.getName());
-		
+		CheckedTextView text1 = (CheckedTextView)convertView.findViewById(android.R.id.text1);	
+		text1.setText(player.getName());	
+		if(this.selectionMode)
+			text1.setCheckMarkDrawable(android.R.drawable.btn_radio);
+		else
+			text1.setCheckMarkDrawable(R.drawable.empty);
 		return convertView;
 	}
-
 }
