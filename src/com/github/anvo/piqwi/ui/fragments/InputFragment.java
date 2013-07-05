@@ -35,6 +35,7 @@ import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Value;
 import com.github.anvo.piqwi.ui.GameActivity;
+import com.github.anvo.piqwi.ui.LocalEvents;
 
 public class InputFragment extends SherlockFragment {
 
@@ -54,7 +55,7 @@ public class InputFragment extends SherlockFragment {
     	super.onActivityCreated(savedInstanceState);
     	
     	this.game = ((GameActivity)this.getActivity()).getGame();
-		this.value = new Value(this.game.nextPlayer());
+		this.resetInputValues();
     	
         //Number callbacks    	
     	this.registerNumberButtonListener(2, R.id.input_button2);
@@ -81,16 +82,18 @@ public class InputFragment extends SherlockFragment {
 			}
 		});    	
     	    	
-    	//Receive game restart intent
+    	//Receive local events
     	this.broadcastReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				if(GameActivity.ACTION_GAME_RESTART.equals(intent.getAction()))
-					InputFragment.this.value = new Value(InputFragment.this.game.nextPlayer());
-					InputFragment.this.redraw();
+					InputFragment.this.resetInputValues();
 			}};
-    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, new IntentFilter(GameActivity.ACTION_GAME_RESTART));
-    	
+		IntentFilter eventFilter = new IntentFilter();
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_ADD);
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_EDIT);
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_REMOVE);
+		eventFilter.addAction(LocalEvents.ACTION_GAME_NEW);
+    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, eventFilter);
     	
     	this.redraw();
     }
@@ -148,6 +151,13 @@ public class InputFragment extends SherlockFragment {
     protected void onButtonOKClick()
     { 
     	this.game.addNextValue(value);
+    	this.value = new Value(this.game.nextPlayer());
+    	this.redraw();
+		LocalBroadcastManager.getInstance(this.getActivity()).sendBroadcast(new Intent(LocalEvents.ACTION_RESULT_ADD));
+    }
+    
+    protected void resetInputValues()
+    {
     	this.value = new Value(this.game.nextPlayer());
     	this.redraw();
     }

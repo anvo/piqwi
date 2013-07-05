@@ -61,9 +61,7 @@ public class GameActivity extends SherlockFragmentActivity {
 	
 	private final String GAME_SAVE_FILE = "GameSave";
 	
-	public final static String ACTION_GAME_RESTART = "com.github.anvo.piqwi.ACTION_GAME_RESTART";
-	public final static String ACTION_PAGE_SELECTED = "com.github.anvo.piqwi.ACTION_PAGE_SELECTED";
-	
+	public final static String ACTION_PAGE_SELECTED = "com.github.anvo.piqwi.ACTION_PAGE_SELECTED";	
 	public final static String EXTRA_PAGE_POSITION = "com.github.anvo.piqwi.EXTRA_PAGE_POSITION";
 	
 	private Game game = new Game();
@@ -103,7 +101,7 @@ public class GameActivity extends SherlockFragmentActivity {
 				LocalBroadcastManager.getInstance(GameActivity.this).sendBroadcastSync(pageSelected);
 			}});
         
-        this.loadGame();
+        this.loadGame();    	
     }
 
     @Override
@@ -125,7 +123,7 @@ public class GameActivity extends SherlockFragmentActivity {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						GameActivity.this.game.reset();
-		    			Intent restartIntent = new Intent(GameActivity.ACTION_GAME_RESTART);
+		    			Intent restartIntent = new Intent(LocalEvents.ACTION_GAME_NEW);
 		    			LocalBroadcastManager.getInstance(GameActivity.this).sendBroadcast(restartIntent);
 					}});
     			builder.setNegativeButton(android.R.string.no, null);

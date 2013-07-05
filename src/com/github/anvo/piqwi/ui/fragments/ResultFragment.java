@@ -33,6 +33,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.ui.GameActivity;
+import com.github.anvo.piqwi.ui.LocalEvents;
 import com.github.anvo.piqwi.ui.ResultListAdapter;
 
 public class ResultFragment extends SherlockListFragment
@@ -62,11 +63,16 @@ public class ResultFragment extends SherlockListFragment
     	this.broadcastReceiver  = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				if(GameActivity.ACTION_GAME_RESTART.equals(intent.getAction()))
 					ResultFragment.this.resultAdapter.notifyDataSetChanged();
 			}};
-    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, new IntentFilter(GameActivity.ACTION_GAME_RESTART));
-    	
+		IntentFilter eventFilter = new IntentFilter();
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_ADD);
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_EDIT);
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_REMOVE);
+		eventFilter.addAction(LocalEvents.ACTION_GAME_NEW);
+		eventFilter.addAction(LocalEvents.ACTION_RESULT_ADD);
+		eventFilter.addAction(LocalEvents.ACTION_RESULT_EDIT);
+    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, eventFilter);
     }
     
     public void onStop ()

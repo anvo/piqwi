@@ -37,6 +37,7 @@ import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.CopyWidthTableRow;
 import com.github.anvo.piqwi.ui.GameActivity;
+import com.github.anvo.piqwi.ui.LocalEvents;
 import com.github.anvo.piqwi.ui.RoundListAdapter;
 
 public class RoundsFragment extends SherlockFragment {
@@ -71,17 +72,19 @@ public class RoundsFragment extends SherlockFragment {
 
     	this.update();
     	
-    	//Receive game restart intent
+    	//Receive local events
     	this.broadcastReceiver   = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				if(GameActivity.ACTION_GAME_RESTART.equals(intent.getAction()))
-					update();
-				else if(GameActivity.ACTION_PAGE_SELECTED.equals(intent.getAction()) && GameActivity.ROUNDS_TAB == intent.getIntExtra(GameActivity.EXTRA_PAGE_POSITION, -1))
-					update();
+				update();
 			}};
-		IntentFilter filter =  new IntentFilter(GameActivity.ACTION_GAME_RESTART);
-		filter.addAction(GameActivity.ACTION_PAGE_SELECTED);
+		IntentFilter filter =  new IntentFilter();
+		filter.addAction(LocalEvents.ACTION_GAME_NEW);
+		filter.addAction(LocalEvents.ACTION_PLAYER_ADD);
+		filter.addAction(LocalEvents.ACTION_PLAYER_EDIT);
+		filter.addAction(LocalEvents.ACTION_PLAYER_REMOVE);
+		filter.addAction(LocalEvents.ACTION_RESULT_ADD);
+		filter.addAction(LocalEvents.ACTION_RESULT_EDIT);
     	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, filter);
     	    	
     }

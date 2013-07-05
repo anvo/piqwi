@@ -21,6 +21,8 @@ package com.github.anvo.piqwi.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.EditText;
@@ -83,6 +85,8 @@ public class PlayerListActionMode implements Callback
 			{
     			game.getPlayers().remove(position);
     			mode.finish();
+    			Intent playerRemoveIntent = new Intent(LocalEvents.ACTION_PLAYER_REMOVE);
+    			LocalBroadcastManager.getInstance(this.activity).sendBroadcast(playerRemoveIntent);    			
     			break;
 			}
     		case R.id.menu_list_players_up:
@@ -120,7 +124,8 @@ public class PlayerListActionMode implements Callback
 						if(!name.isEmpty())
 						{
 							game.getPlayers().get(playerId).setName(name);
-							playersAdapter.notifyDataSetChanged();
+			    			Intent playerEditIntent = new Intent(LocalEvents.ACTION_PLAYER_EDIT);
+			    			LocalBroadcastManager.getInstance(activity).sendBroadcast(playerEditIntent);  
 						}
 					}
 				});
@@ -175,6 +180,8 @@ public class PlayerListActionMode implements Callback
     	Player tmp = this.game.getPlayers().get(newIndex);
     	this.game.getPlayers().set(newIndex, this.game.getPlayers().get(oldIndex));
     	this.game.getPlayers().set(oldIndex, tmp);
+		Intent playerEditIntent = new Intent(LocalEvents.ACTION_PLAYER_EDIT);
+		LocalBroadcastManager.getInstance(this.activity).sendBroadcast(playerEditIntent);        	
     }	
 
 }

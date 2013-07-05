@@ -42,6 +42,7 @@ import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.GameActivity;
+import com.github.anvo.piqwi.ui.LocalEvents;
 import com.github.anvo.piqwi.ui.PlayerListActionMode;
 import com.github.anvo.piqwi.ui.PlayerListAdapter;
 
@@ -97,8 +98,17 @@ public class PlayersFragment extends SherlockFragment {
 				if(GameActivity.ACTION_PAGE_SELECTED.equals(intent.getAction()))
 					if(action != null && action.isActive())
 						action.finish();
+				if(LocalEvents.ACTION_PLAYER_ADD.equals(intent.getAction()) ||
+					LocalEvents.ACTION_PLAYER_EDIT.equals(intent.getAction()) ||
+					LocalEvents.ACTION_PLAYER_REMOVE.equals(intent.getAction()))
+						playersAdapter.notifyDataSetChanged();
 			}};
-    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, new IntentFilter(GameActivity.ACTION_PAGE_SELECTED));
+		IntentFilter eventFilter = new IntentFilter();
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_ADD);
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_EDIT);
+		eventFilter.addAction(LocalEvents.ACTION_PLAYER_REMOVE);
+		eventFilter.addAction(GameActivity.ACTION_PAGE_SELECTED);
+    	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, eventFilter);
     	    	
     }
     
@@ -132,7 +142,8 @@ public class PlayersFragment extends SherlockFragment {
 						if(!name.isEmpty())
 						{
 							game.getPlayers().add(new Player(name));
-							playersAdapter.notifyDataSetChanged();
+							Intent playerAddIntent = new Intent(LocalEvents.ACTION_PLAYER_ADD);
+			    			LocalBroadcastManager.getInstance(PlayersFragment.this.getActivity()).sendBroadcast(playerAddIntent);
 						}
 					}
 				});
