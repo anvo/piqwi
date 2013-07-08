@@ -149,9 +149,12 @@ public class InputFragment extends SherlockFragment {
     
     protected void onButtonOKClick()
     { 
-    	GameActivity.getGame().addNextValue(value);
-    	this.resetInputValues();
-		LocalBroadcastManager.getInstance(this.getActivity()).sendBroadcast(new Intent(LocalEvents.ACTION_RESULT_ADD));
+    	if(GameActivity.getGame().getPlayers().size() > 0)
+    	{
+	    	GameActivity.getGame().addNextValue(value);
+	    	this.resetInputValues();
+			LocalBroadcastManager.getInstance(this.getActivity()).sendBroadcast(new Intent(LocalEvents.ACTION_RESULT_ADD));
+    	}
     }
     
     protected void resetInputValues()
