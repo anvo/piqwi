@@ -31,14 +31,11 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.github.anvo.piqwi.R;
-import com.github.anvo.piqwi.logic.Game;
-import com.github.anvo.piqwi.ui.GameActivity;
 import com.github.anvo.piqwi.ui.LocalEvents;
 import com.github.anvo.piqwi.ui.ResultListAdapter;
 
 public class ResultFragment extends SherlockListFragment
 {
-    private Game game = null;
     private ResultListAdapter resultAdapter = null;
 	private BroadcastReceiver broadcastReceiver = null;
     
@@ -53,10 +50,8 @@ public class ResultFragment extends SherlockListFragment
     {
     	super.onActivityCreated(savedInstanceState);
     	
-    	this.game  = ((GameActivity)this.getActivity()).getGame();
-    	
     	ListView results = (ListView) this.getActivity().findViewById(android.R.id.list);
-    	this.resultAdapter = new ResultListAdapter(this.getActivity(), this.game);
+    	this.resultAdapter = new ResultListAdapter(this.getActivity());
     	results.setAdapter(this.resultAdapter);
     	
     	//Receive game restart intent
@@ -75,9 +70,10 @@ public class ResultFragment extends SherlockListFragment
     	LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(this.broadcastReceiver, eventFilter);
     }
     
-    public void onStop ()
+    @Override
+    public void onDestroy()
     {
-    	super.onStop();
+    	super.onDestroy();
     	LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.broadcastReceiver);
     }
 }

@@ -18,15 +18,18 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 */
 package com.github.anvo.piqwi.ui;
 
+import java.util.List;
+
 import com.github.anvo.piqwi.R;
-import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.logic.Round;
 import com.github.anvo.piqwi.logic.Value;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TableLayout;
@@ -36,25 +39,23 @@ import android.widget.TextView;
 public class RoundListAdapter extends BaseAdapter {
 
 	private Context context = null;
-	private Game game = null;
 	private TableRow referenceRow = null;
 
-	public RoundListAdapter(Context c, Game g, TableRow r)
+	public RoundListAdapter(Context c, TableRow r)
 	{
 		this.context = c;
-		this.game = g;
 		this.referenceRow = r;
 	}
 	@Override
 	public int getCount() 
 	{
-		return this.game.getRounds().size();
+		return GameActivity.getGame().getRounds().size();
 	}
 
 	@Override
 	public Object getItem(int position) 
 	{
-		return this.game.getRounds().get(position);
+		return GameActivity.getGame().getRounds().get(position);
 	}
 
 	@Override
@@ -79,18 +80,19 @@ public class RoundListAdapter extends BaseAdapter {
 		return this.populateView(position, (TableLayout) convertView);
 	}
 	
-	protected View populateView(int position, TableLayout convertView)
+	protected View populateView(final int position, TableLayout convertView)
 	{
-		Round round = this.game.getRounds().get(position);
+		final List<Player> players = GameActivity.getGame().getPlayers();
+		Round round = GameActivity.getGame().getRounds().get(position);
 		TableRow row = (TableRow) convertView.getChildAt(0);
 		
 		TextView roundView = (TextView) row.getVirtualChildAt(0);
 		roundView.setText(Integer.toString(position + 1));
 		
 		//Update current elements
-    	for(int i=0; i < this.game.getPlayers().size(); i++)
+    	for(int i=0; i < players.size(); i++)
     	{
-    		Player p = this.game.getPlayers().get(i);
+    		final Player p = players.get(i);
     		Value value = round.getValueFor(p);
     		TextView v = (TextView) row.getVirtualChildAt(i + 1);//First element is not used
     		if(v == null)
@@ -102,9 +104,19 @@ public class RoundListAdapter extends BaseAdapter {
     			v.setText("");
     		else
     			v.setText(Integer.toString(value.getSum()));
+    		
+    		v.setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					Intent openEdit = new Intent(context, EditActivity.class);
+					openEdit.putExtra(EditActivity.EXTRA_ROUND, position);
+					openEdit.putExtra(EditActivity.EXTRA_PLAYER, players.indexOf(p));
+					context.startActivity(openEdit);
+					return true;
+				}});    		
     	}
     	//Delete remaining elements
-    	for(int i=this.game.getPlayers().size(); i < row.getVirtualChildCount()-1; i++)
+    	for(int i = players.size(); i < row.getVirtualChildCount()-1; i++)
     		row.removeViewAt(i+1); 		
 
     	return convertView;

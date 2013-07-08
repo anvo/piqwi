@@ -18,8 +18,6 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 */
 package com.github.anvo.piqwi.ui;
 
-import java.util.List;
-
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Player;
 
@@ -32,34 +30,32 @@ import android.widget.CheckedTextView;
 
 public class PlayerListAdapter extends BaseAdapter {
 
-	private List<Player> list = null;
 	private Context context = null;
 	private boolean selectionMode = false;
 	
-	public PlayerListAdapter(Context c, List<Player> list)
+	public PlayerListAdapter(Context c)
 	{
-		this.list = list;
 		this.context = c;
 	}
 	
 	@Override
 	public int getCount() 
 	{
-		return this.list.size();
+		return GameActivity.getGame().getPlayers().size();
 	}
 
 	@Override
 	public Object getItem(int position) 
 	{
-		return this.list.get(position);
+		return GameActivity.getGame().getPlayers().get(position);
 	}
 
 	@Override
 	public long getItemId(int position) 
 	{
-		if(this.list.size() >= position)
+		if(this.getCount() >= position)
 			return 0;
-		return this.list.get(position).hashCode();
+		return this.getItem(position).hashCode();
 	}
 
 	@Override

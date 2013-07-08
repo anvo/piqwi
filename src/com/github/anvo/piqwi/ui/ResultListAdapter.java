@@ -18,7 +18,6 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 */
 package com.github.anvo.piqwi.ui;
 
-import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -30,29 +29,28 @@ import android.widget.TextView;
 public class ResultListAdapter extends BaseAdapter{
 
 	private Context context = null;
-	private Game game = null;
 	
-	public ResultListAdapter(Context c, Game g)
+	
+	public ResultListAdapter(Context c)
 	{
 		this.context = c;
-		this.game = g;
 	}	
 	
 	@Override
 	public int getCount() {
-		return this.game.getResultList().size();
+		return GameActivity.getGame().getResultList().size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return this.game.getResultList().get(position);
+		return GameActivity.getGame().getResultList().get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		if(this.game.getResultList().size() >= position)
+		if(this.getCount() >= position)
 			return 0;
-		return this.game.getResultList().get(position).hashCode();
+		return this.getItem(position).hashCode();
 	}
 
 	@Override
@@ -66,7 +64,7 @@ public class ResultListAdapter extends BaseAdapter{
 		Player player = (Player)this.getItem(position);
 		
 		TextView text1 = (TextView)convertView.findViewById(android.R.id.text1);
-		text1.setText(Integer.toString(this.game.getResultFor(player)) + " Punkte");
+		text1.setText(Integer.toString(GameActivity.getGame().getResultFor(player)) + " Punkte");
 		
 		TextView text2 = (TextView)convertView.findViewById(android.R.id.text2);
 		

@@ -32,15 +32,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.github.anvo.piqwi.R;
-import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Value;
 import com.github.anvo.piqwi.ui.GameActivity;
 import com.github.anvo.piqwi.ui.LocalEvents;
 
 public class InputFragment extends SherlockFragment {
 
-	private Value value = null;
-	private Game game = null;
+	protected Value value = null;
 	private BroadcastReceiver broadcastReceiver = null;
 		
     @Override
@@ -54,8 +52,8 @@ public class InputFragment extends SherlockFragment {
     {
     	super.onActivityCreated(savedInstanceState);
     	
-    	this.game = ((GameActivity)this.getActivity()).getGame();
-		this.resetInputValues();
+    	if(this.value == null)
+    		this.resetInputValues();
     	
         //Number callbacks    	
     	this.registerNumberButtonListener(2, R.id.input_button2);
@@ -87,7 +85,7 @@ public class InputFragment extends SherlockFragment {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 					InputFragment.this.resetInputValues();
-			}};
+		}};
 		IntentFilter eventFilter = new IntentFilter();
 		eventFilter.addAction(LocalEvents.ACTION_PLAYER_ADD);
 		eventFilter.addAction(LocalEvents.ACTION_PLAYER_EDIT);
@@ -98,16 +96,17 @@ public class InputFragment extends SherlockFragment {
     	this.redraw();
     }
     
-    public void onStop ()
+    @Override
+    public void onDestroy()
     {
-    	super.onStop();
+    	super.onDestroy();
     	LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.broadcastReceiver);
     }
 	
     protected void redraw()
     {
     	TextView currentround = (TextView) this.getActivity().findViewById(R.id.input_currentround);
-    	currentround.setText("Runde " + this.game.getNumCurrentRound());
+    	currentround.setText("Runde " + GameActivity.getGame().getNumCurrentRound());
     	
     	TextView currentplayer = (TextView) this.getActivity().findViewById(R.id.input_currentplayer);
     	currentplayer.setText(this.value.getPlayer().getName());
@@ -150,15 +149,15 @@ public class InputFragment extends SherlockFragment {
     
     protected void onButtonOKClick()
     { 
-    	this.game.addNextValue(value);
-    	this.value = new Value(this.game.nextPlayer());
-    	this.redraw();
+    	GameActivity.getGame().addNextValue(value);
+    	this.resetInputValues();
 		LocalBroadcastManager.getInstance(this.getActivity()).sendBroadcast(new Intent(LocalEvents.ACTION_RESULT_ADD));
     }
     
     protected void resetInputValues()
     {
-    	this.value = new Value(this.game.nextPlayer());
-    	this.redraw();
+    	this.value = new Value(GameActivity.getGame().nextPlayer());
+    	if(this.isVisible())
+    		this.redraw();
     }
 }

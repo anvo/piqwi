@@ -64,7 +64,7 @@ public class GameActivity extends SherlockFragmentActivity {
 	public final static String ACTION_PAGE_SELECTED = "com.github.anvo.piqwi.ACTION_PAGE_SELECTED";	
 	public final static String EXTRA_PAGE_POSITION = "com.github.anvo.piqwi.EXTRA_PAGE_POSITION";
 	
-	private Game game = new Game();
+	private static Game game = new Game();
 	
 
     /**
@@ -101,7 +101,7 @@ public class GameActivity extends SherlockFragmentActivity {
 				LocalBroadcastManager.getInstance(GameActivity.this).sendBroadcastSync(pageSelected);
 			}});
         
-        this.loadGame();    	
+        this.loadGame();
     }
 
     @Override
@@ -122,7 +122,7 @@ public class GameActivity extends SherlockFragmentActivity {
     			builder.setPositiveButton(android.R.string.yes, new OnClickListener(){
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
-						GameActivity.this.game.reset();
+						GameActivity.game.reset();
 		    			Intent restartIntent = new Intent(LocalEvents.ACTION_GAME_NEW);
 		    			LocalBroadcastManager.getInstance(GameActivity.this).sendBroadcast(restartIntent);
 					}});
@@ -144,15 +144,22 @@ public class GameActivity extends SherlockFragmentActivity {
     }
     
     @Override
-    public void onStop()
+    protected void onRestoreInstanceState (Bundle savedInstanceState)
     {
-    	super.onStop();
+    	super.onRestoreInstanceState(savedInstanceState);
+    	this.loadGame();
+    }
+    
+    @Override
+    protected void onSaveInstanceState (Bundle outState)
+    {
+    	super.onSaveInstanceState(outState);
     	this.saveGame();
     }
-
-    public Game getGame()
+        
+    public static Game getGame()
     {
-    	return this.game;
+    	return GameActivity.game;
     }
     
     protected void saveGame()
@@ -160,7 +167,7 @@ public class GameActivity extends SherlockFragmentActivity {
     	try {
     		FileOutputStream fileOut = this.openFileOutput(GAME_SAVE_FILE, MODE_PRIVATE);
     		ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-    		objectOut.writeObject(this.game);
+    		objectOut.writeObject(GameActivity.game);
     		objectOut.flush();
     		objectOut.close();
     		fileOut.flush();
@@ -175,7 +182,7 @@ public class GameActivity extends SherlockFragmentActivity {
     	try {
 			FileInputStream fileIn = this.openFileInput(GAME_SAVE_FILE);
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-			this.game = (Game) objectIn.readObject();
+			GameActivity.game = (Game) objectIn.readObject();
 			objectIn.close();
 			fileIn.close();
     	} catch(FileNotFoundException f) {
@@ -190,9 +197,9 @@ public class GameActivity extends SherlockFragmentActivity {
     	StringBuffer buffer = new StringBuffer();
     	
     	buffer.append("Das Ergebnis nach ");
-    	buffer.append(this.game.getRounds().size());
+    	buffer.append(GameActivity.getGame().getRounds().size());
     	buffer.append(" Runden:\n\n");
-    	for(Player p: this.game.getResultList())
+    	for(Player p: GameActivity.getGame().getResultList())
     	{
     		buffer.append(game.getResultFor(p));
     		buffer.append(" Punkt - ");

@@ -39,7 +39,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.github.anvo.piqwi.R;
-import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.GameActivity;
 import com.github.anvo.piqwi.ui.LocalEvents;
@@ -48,7 +47,6 @@ import com.github.anvo.piqwi.ui.PlayerListAdapter;
 
 public class PlayersFragment extends SherlockFragment {
 
-	private Game game = null;
 	private PlayerListAdapter playersAdapter = null;
 	private PlayerListActionMode action = null;
 	private BroadcastReceiver broadcastReceiver = null;
@@ -72,15 +70,13 @@ public class PlayersFragment extends SherlockFragment {
     {
     	super.onActivityCreated(savedInstanceState);
     	
-    	this.game = ((GameActivity)this.getActivity()).getGame();
-    	
-    	this.playersAdapter = new PlayerListAdapter(this.getActivity(), this.game.getPlayers());
+    	this.playersAdapter = new PlayerListAdapter(this.getActivity());
     	final ListView players = (ListView) this.getActivity().findViewById(R.id.list_players);
     	players.setAdapter(playersAdapter);
     	players.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-				action = new PlayerListActionMode(getActivity(), game, playersAdapter, position,players);
+				action = new PlayerListActionMode(getActivity(), GameActivity.getGame(), playersAdapter, position,players);
 				getSherlockActivity().startActionMode(action);
 				return true;
 			}});	
@@ -112,9 +108,10 @@ public class PlayersFragment extends SherlockFragment {
     	    	
     }
     
-    public void onStop ()
+    @Override
+    public void onDestroy()
     {
-    	super.onStop();
+    	super.onDestroy();
     	LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.broadcastReceiver);
     }    
     
@@ -141,7 +138,7 @@ public class PlayersFragment extends SherlockFragment {
 						String name = nameText.getText().toString();
 						if(!name.isEmpty())
 						{
-							game.getPlayers().add(new Player(name));
+							GameActivity.getGame().getPlayers().add(new Player(name));
 							Intent playerAddIntent = new Intent(LocalEvents.ACTION_PLAYER_ADD);
 			    			LocalBroadcastManager.getInstance(PlayersFragment.this.getActivity()).sendBroadcast(playerAddIntent);
 						}
