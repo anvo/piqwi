@@ -25,9 +25,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
@@ -48,11 +45,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-public class GameActivity extends SherlockFragmentActivity {
+public class GameActivity extends ActionBarActivity {
 	
 	public final static int PLAYERS_TAB = 0;
 	public final static int INPUT_TAB = 1;
@@ -106,7 +106,7 @@ public class GameActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportMenuInflater().inflate(R.menu.activity_game, menu);
+        this.getMenuInflater().inflate(R.menu.activity_game, menu);
         return true;
     }    
     

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menu_players_addplayer" android:title="Spieler hinzufügen" android:showAsAction="always" android:icon="@drawable/ic_action_addplayer"></item>
-    
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:piqwi="http://schemas.android.com/apk/res-auto" >
+    <item android:id="@+id/menu_players_addplayer" 
+        android:title="Spieler hinzufügen" 
+        piqwi:showAsAction="always" 
+        android:icon="@drawable/ic_action_addplayer"></item>
 </menu>

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,13 +31,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Value;
 import com.github.anvo.piqwi.ui.GameActivity;
 import com.github.anvo.piqwi.ui.LocalEvents;
 
-public class InputFragment extends SherlockFragment {
+public class InputFragment extends Fragment {
 
 	protected Value value = null;
 	private BroadcastReceiver broadcastReceiver = null;

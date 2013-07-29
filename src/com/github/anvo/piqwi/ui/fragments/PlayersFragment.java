@@ -25,8 +25,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,10 +39,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.GameActivity;
@@ -45,7 +46,7 @@ import com.github.anvo.piqwi.ui.LocalEvents;
 import com.github.anvo.piqwi.ui.PlayerListActionMode;
 import com.github.anvo.piqwi.ui.PlayerListAdapter;
 
-public class PlayersFragment extends SherlockFragment {
+public class PlayersFragment extends Fragment {
 
 	private PlayerListAdapter playersAdapter = null;
 	private PlayerListActionMode action = null;
@@ -77,7 +78,7 @@ public class PlayersFragment extends SherlockFragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 				action = new PlayerListActionMode(getActivity(), GameActivity.getGame(), playersAdapter, position,players);
-				getSherlockActivity().startActionMode(action);
+				((ActionBarActivity)getActivity()).startSupportActionMode(action);
 				return true;
 			}});	
     	players.setOnItemClickListener(new OnItemClickListener() {

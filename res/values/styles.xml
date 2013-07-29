@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="Theme.Sherlock">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <item name="tableRoundsHeaderRef">@style/TableRounds.Header</item>
         <item name="tableRoundsRowRef">@style/TableRounds.Row</item>
         <item name="tableRoundsRowFirstRef">@style/TableRounds.Row.First</item>

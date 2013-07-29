@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
-import com.actionbarsherlock.app.SherlockFragment;
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.CopyWidthTableRow;
@@ -40,7 +40,7 @@ import com.github.anvo.piqwi.ui.GameActivity;
 import com.github.anvo.piqwi.ui.LocalEvents;
 import com.github.anvo.piqwi.ui.RoundListAdapter;
 
-public class RoundsFragment extends SherlockFragment {
+public class RoundsFragment extends Fragment {
 
 	private BroadcastReceiver broadcastReceiver = null;
 	private ListView list = null;

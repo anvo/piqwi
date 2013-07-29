@@ -19,16 +19,16 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 package com.github.anvo.piqwi.ui;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Round;
 import com.github.anvo.piqwi.logic.Value;
 import com.github.anvo.piqwi.ui.fragments.EditInputFragment;
 
-public class EditActivity extends SherlockFragmentActivity 
+public class EditActivity extends ActionBarActivity 
 {
 	public static final String EXTRA_ROUND = EditActivity.class.getName() + ".ROUND";
 	public static final String EXTRA_PLAYER = EditActivity.class.getName() + ".PLAYER";
