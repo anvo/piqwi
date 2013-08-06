@@ -53,6 +53,7 @@ public class RoundsFragment extends Fragment {
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_rounds, container, false);
         this.list = (ListView) v.findViewById(R.id.rounds_table_body);
+        this.list.setEmptyView(v.findViewById(R.id.rounds_table_body_empty));
         this.header = (TableRow) v.findViewById(R.id.rounds_table_header_row);
         this.footer = (CopyWidthTableRow) v.findViewById(R.id.rounds_table_footer_row);
         this.footer.setSource(this.header);
@@ -104,6 +105,16 @@ public class RoundsFragment extends Fragment {
     {
     	List<Player> players = GameActivity.getGame().getPlayers();
     	
+    	if(GameActivity.getGame().getRounds().size() == 0)
+    	{
+    		this.header.setVisibility(View.GONE);
+    		return;
+    	}
+    	else
+    	{
+    		this.header.setVisibility(View.VISIBLE);
+    	}
+    	
     	//Update current elements
     	for(int i=0; i < players.size(); i++)
     	{
@@ -124,6 +135,16 @@ public class RoundsFragment extends Fragment {
     protected void updateFooter()
     {
     	List<Player> players = GameActivity.getGame().getPlayers();
+    	
+    	if(GameActivity.getGame().getRounds().size() == 0)
+    	{
+    		this.footer.setVisibility(View.GONE);
+    		return;
+    	}
+    	else
+    	{
+    		this.footer.setVisibility(View.VISIBLE);
+    	}
     	
     	//Update current elements
     	for(int i=0; i < players.size(); i++)

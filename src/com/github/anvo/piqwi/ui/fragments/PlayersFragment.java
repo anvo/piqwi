@@ -52,6 +52,8 @@ public class PlayersFragment extends Fragment {
 	private PlayerListActionMode action = null;
 	private BroadcastReceiver broadcastReceiver = null;
 	
+	private ListView players = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -63,6 +65,8 @@ public class PlayersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_players, container, false);
+        this.players = (ListView) v.findViewById(R.id.list_players_list);
+        this.players.setEmptyView(v.findViewById(R.id.list_players_empty));
         return v;
     }
     
@@ -72,7 +76,6 @@ public class PlayersFragment extends Fragment {
     	super.onActivityCreated(savedInstanceState);
     	
     	this.playersAdapter = new PlayerListAdapter(this.getActivity());
-    	final ListView players = (ListView) this.getActivity().findViewById(R.id.list_players);
     	players.setAdapter(playersAdapter);
     	players.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override

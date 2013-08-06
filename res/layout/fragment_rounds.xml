@@ -54,7 +54,24 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rounds_table_header"
         tools:listitem="@layout/fragment_rounds_body_item" >
+
     </ListView>
+
+    <RelativeLayout
+        android:id="@+id/rounds_table_body_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp" >
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Es gibt noch keine Ergebnisse." />
+
+    </RelativeLayout>
 
     <TableLayout
         android:id="@+id/rounds_table_footer"
