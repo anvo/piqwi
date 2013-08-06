@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:piqwi="http://schemas.android.com/apk/res-auto">
     
     
     
-    <item android:id="@+id/menu_list_players_up" android:title="Hoch" android:orderInCategory="10" android:icon="@drawable/ic_action_up"></item><item android:id="@+id/menu_list_players_down" android:title="Runter" android:orderInCategory="20" android:icon="@drawable/ic_action_down"></item><item android:id="@+id/menu_list_players_edit" android:title="Bearbeiten" android:orderInCategory="29" android:icon="@drawable/ic_action_edit"></item><item android:id="@+id/menu_list_players_delete" android:title="Löschen" android:orderInCategory="30" android:icon="@drawable/ic_action_delete"></item>
+    <item android:id="@+id/menu_list_players_up" android:title="Hoch" android:orderInCategory="10" android:icon="@drawable/ic_action_up" piqwi:showAsAction="always"></item><item android:id="@+id/menu_list_players_down" android:title="Runter" android:orderInCategory="20" android:icon="@drawable/ic_action_down" piqwi:showAsAction="always"></item><item android:id="@+id/menu_list_players_edit" android:title="Bearbeiten" android:orderInCategory="29" android:icon="@drawable/ic_action_edit" piqwi:showAsAction="ifRoom"></item><item android:id="@+id/menu_list_players_delete" android:title="Löschen" android:orderInCategory="30" android:icon="@drawable/ic_action_delete" piqwi:showAsAction="ifRoom"></item>
     
     
 
