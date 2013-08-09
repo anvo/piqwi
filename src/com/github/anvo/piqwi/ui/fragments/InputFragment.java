@@ -27,6 +27,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,7 +43,14 @@ public class InputFragment extends Fragment {
 
 	protected Value value = null;
 	private BroadcastReceiver broadcastReceiver = null;
-		
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		this.setHasOptionsMenu(true);
+	}
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -97,10 +107,30 @@ public class InputFragment extends Fragment {
     }
     
     @Override
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
+    {
+    	inflater.inflate(R.menu.fragment_input, menu);
+    }
+    
+    @Override
     public void onDestroy()
     {
     	super.onDestroy();
     	LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(this.broadcastReceiver);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
+    	switch(item.getItemId())
+    	{
+    		case R.id.menu_input_lasttile:
+    		{
+    			this.onButtonNumberClick(6);
+    			return true;
+    		}
+    	}
+    	return false;
     }
 	
     protected void redraw()
