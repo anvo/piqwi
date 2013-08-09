@@ -18,12 +18,14 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 */
 package com.github.anvo.piqwi.ui;
 
+import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Player;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ResultListAdapter extends BaseAdapter{
@@ -58,18 +60,22 @@ public class ResultListAdapter extends BaseAdapter{
 		if(convertView == null)
 		{
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+			convertView = inflater.inflate(R.layout.fragment_result_item, parent, false);
 		}	
 		
 		Player player = (Player)this.getItem(position);
 		
-		TextView text1 = (TextView)convertView.findViewById(android.R.id.text1);
+		TextView text1 = (TextView)convertView.findViewById(R.id.result_item_title);
 		text1.setText(Integer.toString(GameActivity.getGame().getResultFor(player)) + " Punkte");
 		
-		TextView text2 = (TextView)convertView.findViewById(android.R.id.text2);
-		
+		TextView text2 = (TextView)convertView.findViewById(R.id.result_item_sub);
 		text2.setText(player.getName());
-				
+	
+		View icon = convertView.findViewById(R.id.result_item_icon);
+		if(position == 0)
+			icon.setVisibility(View.VISIBLE);
+		else
+			icon.setVisibility(View.GONE);
 		
 		return convertView;
 	}

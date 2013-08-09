@@ -19,7 +19,7 @@
             android:text="1" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/result_item_sub"
             style="@style/TableRounds.Row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
