@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:piqwi="http://schemas.android.com/apk/res-auto" >
     <item android:id="@+id/menu_players_addplayer" 
-        android:title="Spieler hinzufügen" 
+        android:title="@string/menu_players_add" 
         piqwi:showAsAction="always" 
         android:icon="@drawable/ic_action_addplayer"></item>
 </menu>

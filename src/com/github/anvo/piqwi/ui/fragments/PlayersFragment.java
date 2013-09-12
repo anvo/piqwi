@@ -134,7 +134,7 @@ public class PlayersFragment extends Fragment {
     			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
     			final View layout = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_player, null);
     			builder.setView(layout);
-    			builder.setTitle("Neuer Spieler");
+    			builder.setTitle(this.getString(R.string.dialog_players_add_title));
     			builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

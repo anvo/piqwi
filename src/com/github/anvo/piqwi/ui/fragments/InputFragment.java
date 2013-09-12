@@ -136,8 +136,7 @@ public class InputFragment extends Fragment {
     protected void redraw()
     {
     	TextView currentround = (TextView) this.getActivity().findViewById(R.id.input_currentround);
-    	currentround.setText("Runde " + GameActivity.getGame().getNumCurrentRound());
-    	
+    	currentround.setText(this.getString(R.string.intput_currentround,  GameActivity.getGame().getNumCurrentRound()));
     	TextView currentplayer = (TextView) this.getActivity().findViewById(R.id.input_currentplayer);
     	currentplayer.setText(this.value.getPlayer().getName());
     	

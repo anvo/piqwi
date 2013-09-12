@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="Es sind keine Spieler angelegt." />
+            android:text="@string/list_result_empty" />
 
     </RelativeLayout>
 </LinearLayout>

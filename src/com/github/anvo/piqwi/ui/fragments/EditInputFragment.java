@@ -50,7 +50,7 @@ public class EditInputFragment extends InputFragment
 		super.redraw();
 		
 		TextView currentround = (TextView) this.getActivity().findViewById(R.id.input_currentround);
-    	currentround.setText("Runde " + this.roundNumber);
+    	currentround.setText(this.getString(R.string.intput_currentround, this.roundNumber));
 	}
 	
 	@Override

@@ -89,8 +89,7 @@ public class GameActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_game);
-        // Create the adapter that will return a fragment for each of the three primary sections
-        // of the app.
+ 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 
@@ -139,8 +138,8 @@ public class GameActivity extends ActionBarActivity {
     	{
     		case R.id.menu_restart:
     			Builder builder = new AlertDialog.Builder(this);
-    			builder.setTitle("Neustart");
-    			builder.setMessage("Das Spiel neu starten?");
+    			builder.setTitle(this.getString(R.string.dialog_restart_title));
+    			builder.setMessage(this.getString(R.string.dialog_restart_message));
     			builder.setIcon(android.R.drawable.ic_dialog_alert);
     			builder.setPositiveButton(android.R.string.yes, new OnClickListener(){
 					@Override
@@ -155,12 +154,12 @@ public class GameActivity extends ActionBarActivity {
     		case R.id.menu_share:
     			Intent shareIntent = new Intent(Intent.ACTION_SEND);
     			shareIntent.setType("text/plain");
-    			shareIntent.putExtra(Intent.EXTRA_SUBJECT, "PiQwi Ergebnis");
+    			shareIntent.putExtra(Intent.EXTRA_SUBJECT, this.getString(R.string.share_subject));
     			shareIntent.putExtra(Intent.EXTRA_TEXT, this.getShareText());
     			this.startActivity(Intent.createChooser(shareIntent, "Share"));
     		return true;
     		case R.id.menu_settings:
-    			Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+    			Toast.makeText(this, this.getString(R.string.menu_settings), Toast.LENGTH_SHORT).show();
     		return true;    		
     	}
         return false;
@@ -219,20 +218,10 @@ public class GameActivity extends ActionBarActivity {
     {
     	StringBuffer buffer = new StringBuffer();
     	
-    	buffer.append("Das Ergebnis nach ");
-    	buffer.append(GameActivity.getGame().getRounds().size());
-    	buffer.append(" Runden:\n\n");
     	for(Player p: GameActivity.getGame().getResultList())
-    	{
-    		buffer.append(game.getResultFor(p));
-    		buffer.append(" Punkt - ");
-    		buffer.append(p.getName());
-    		buffer.append("\n");
-    	}
-    	
-    	buffer.append("\n PiQwi v" + this.getVersion());
-    	
-    	return buffer.toString();
+    		buffer.append(this.getString(R.string.share_text_player, game.getResultFor(p), p.getName()));
+
+    	return this.getString(R.string.share_text, game.getRounds().size(), buffer.toString(), this.getVersion());
     }
 
     protected String getVersion()

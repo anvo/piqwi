@@ -4,7 +4,7 @@
     
     
     
-    <item android:id="@+id/menu_list_players_up" android:title="Hoch" android:orderInCategory="10" android:icon="@drawable/ic_action_up" piqwi:showAsAction="always"></item><item android:id="@+id/menu_list_players_down" android:title="Runter" android:orderInCategory="20" android:icon="@drawable/ic_action_down" piqwi:showAsAction="always"></item><item android:id="@+id/menu_list_players_edit" android:title="Bearbeiten" android:orderInCategory="29" android:icon="@drawable/ic_action_edit" piqwi:showAsAction="ifRoom"></item><item android:id="@+id/menu_list_players_delete" android:title="Löschen" android:orderInCategory="30" android:icon="@drawable/ic_action_delete" piqwi:showAsAction="ifRoom"></item>
+    <item android:id="@+id/menu_list_players_up" android:title="@string/menu_list_players_up" android:orderInCategory="10" android:icon="@drawable/ic_action_up" piqwi:showAsAction="always"></item><item android:id="@+id/menu_list_players_down" android:title="@string/menu_list_players_down" android:orderInCategory="20" android:icon="@drawable/ic_action_down" piqwi:showAsAction="always"></item><item android:id="@+id/menu_list_players_edit" android:title="@string/menu_list_players_edit" android:orderInCategory="29" android:icon="@drawable/ic_action_edit" piqwi:showAsAction="ifRoom"></item><item android:id="@+id/menu_list_players_delete" android:title="@string/menu_list_players_delete" android:orderInCategory="30" android:icon="@drawable/ic_action_delete" piqwi:showAsAction="ifRoom"></item>
     
     
 

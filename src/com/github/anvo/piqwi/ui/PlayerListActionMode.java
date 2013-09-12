@@ -115,7 +115,7 @@ public class PlayerListActionMode implements Callback
     			final View layout = activity.getLayoutInflater().inflate(R.layout.dialog_player, null);
     			((EditText) layout.findViewById(R.id.dialog_player_name)).setText(player.getName()); 
     			builder.setView(layout);
-    			builder.setTitle("Spieler: " + player.getName());
+    			builder.setTitle(activity.getString(R.string.dialog_players_edit_title, player.getName()));
     			builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

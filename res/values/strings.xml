@@ -1,12 +1,29 @@
 <resources>
 
     <string name="app_name">PiQwi</string>
-    <string name="title_rounds">Runden</string>
-    <string name="title_input">Eingabe</string>
-    <string name="title_players">Spieler</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_rounds">Rounds</string>
+    <string name="title_input">Input</string>
+    <string name="title_players">Players</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_game">PiQwi</string>
-    <string name="title_result">Ergebnis</string>
-
+    <string name="title_result">Result</string>
+	<string name="intput_currentround">Round %1$d</string>
+    <string name="rounds_table_body_empty">There are no results yet.</string>
+    <string name="list_result_empty">There are no players yet.</string>
+    <string name="list_players_empty">There are no players yet.</string>
+    <string name="dialog_players_add_title">New player</string>
+    <string name="dialog_players_edit_title">Player: %1$s</string>
+    <string name="dialog_restart_title">Restart</string>
+    <string name="dialog_restart_message">Do you really want to restart the game?</string>
+    <string name="share_text">The result after %1$s rounds:\n\n%2$s\nPiQwi v%3$s</string>
+	<string name="share_text_player">%1$d Points - %2$s\n</string>
+	<string name="share_subject">PiQwi Result</string>
+	<string name="menu_share">Share</string>
+	<string name="menu_restart">Restart</string>
+	<string name="menu_input_lasttile">Bonus last tiles</string>
+	<string name="menu_players_add">Add player</string>
+	<string name="menu_list_players_up">Up</string>
+	<string name="menu_list_players_down">Down</string>
+	<string name="menu_list_players_edit">Edit</string>
+	<string name="menu_list_players_delete">Delete</string>	
 </resources>
