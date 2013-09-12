@@ -35,7 +35,10 @@ import com.github.anvo.piqwi.ui.fragments.RoundsFragment;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -79,6 +82,7 @@ public class GameActivity extends ActionBarActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+	private BroadcastReceiver broadcastReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,18 @@ public class GameActivity extends ActionBarActivity {
 				LocalBroadcastManager.getInstance(GameActivity.this).sendBroadcastSync(pageSelected);
 			}});
         
+    	//Receive local events
+    	this.broadcastReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+					GameActivity.this.saveGame();
+		}};        
+		IntentFilter eventFilter = new IntentFilter();
+		eventFilter.addAction(LocalEvents.ACTION_RESULT_ADD);
+		eventFilter.addAction(LocalEvents.ACTION_RESULT_EDIT);
+    	LocalBroadcastManager.getInstance(this).registerReceiver(this.broadcastReceiver, eventFilter);
+    	        
+        
         this.loadGame();
     }
 
@@ -109,6 +125,13 @@ public class GameActivity extends ActionBarActivity {
         this.getMenuInflater().inflate(R.menu.activity_game, menu);
         return true;
     }    
+    
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	LocalBroadcastManager.getInstance(this).unregisterReceiver(this.broadcastReceiver);
+    } 
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
