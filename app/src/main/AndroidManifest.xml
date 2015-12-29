@@ -1,11 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.anvo.piqwi"
-    android:versionCode="4"
-    android:versionName="0.4" >
+    package="com.github.anvo.piqwi">
 
-    <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="15" />
+    <uses-sdk />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -20,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.EditActivity" android:label="Eintrag bearbeiten"></activity>
+        <activity android:name=".ui.EditActivity" android:label="Eintrag bearbeiten" />
     </application>
 
 </manifest>
