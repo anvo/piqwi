@@ -62,6 +62,13 @@ public class PlayerListActionMode implements Callback
 	public boolean onCreateActionMode(ActionMode mode, Menu menu) 
 	{
 		mode.getMenuInflater().inflate(R.menu.list_players, menu);
+		// Workaround for Android Issue 159527
+		// https://code.google.com/p/android/issues/detail?id=159527
+		// Method onPrepareActionMode is no longer called after onCreateActionMode
+		// in Android > 5.0 and appcompat > v22.1
+		// For now, we will call it by hand
+		this.onPrepareActionMode(mode, menu);
+
 		return true;
 	}
 
