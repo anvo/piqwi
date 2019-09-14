@@ -165,9 +165,6 @@ public class GameActivity extends AppCompatActivity {
     			shareIntent.putExtra(Intent.EXTRA_TEXT, this.getShareText());
     			this.startActivity(Intent.createChooser(shareIntent, "Share"));
     		return true;
-    		case R.id.menu_settings:
-    			Toast.makeText(this, this.getString(R.string.menu_settings), Toast.LENGTH_SHORT).show();
-    		return true;    		
     	}
         return false;
     }

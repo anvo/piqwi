@@ -1,8 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:piqwi="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_settings"
-        android:title="@string/menu_settings"
-        android:orderInCategory="200" android:icon="@drawable/ic_action_settings"/>
     <item android:id="@+id/menu_share" android:title="@string/menu_share" android:orderInCategory="150" piqwi:showAsAction="always" android:icon="@drawable/ic_action_share"></item><item android:id="@+id/menu_restart" android:title="@string/menu_restart" piqwi:showAsAction="always" android:icon="@drawable/ic_action_restart" android:orderInCategory="100"></item>
     
 </menu>
