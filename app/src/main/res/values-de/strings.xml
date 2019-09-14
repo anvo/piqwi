@@ -11,6 +11,7 @@
     <string name="rounds_table_body_empty">Es gibt noch keine Ergebnisse.</string>
     <string name="list_result_empty">Es sind keine Spieler angelegt.</string>
     <string name="list_players_empty">Es sind keine Spieler angelegt.</string>
+    <string name="list_players_item">%1d Punkte</string>
     <string name="dialog_players_add_title">Neuer Spieler</string>
     <string name="dialog_players_edit_title">Spieler: %1$s</string>
     <string name="dialog_restart_title">Neustart</string>

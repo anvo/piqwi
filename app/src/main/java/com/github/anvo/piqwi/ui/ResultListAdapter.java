@@ -66,7 +66,7 @@ public class ResultListAdapter extends BaseAdapter{
 		Player player = (Player)this.getItem(position);
 		
 		TextView text1 = (TextView)convertView.findViewById(R.id.result_item_title);
-		text1.setText(Integer.toString(GameActivity.getGame().getResultFor(player)) + " Punkte");
+		text1.setText(this.context.getString(R.string.list_players_item, GameActivity.getGame().getResultFor(player)));
 		
 		TextView text2 = (TextView)convertView.findViewById(R.id.result_item_sub);
 		text2.setText(player.getName());
