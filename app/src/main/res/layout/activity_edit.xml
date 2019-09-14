@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".EditActivity" >
 
+    <include layout="@layout/toolbar"/>
+
     <fragment
         android:id="@+id/activity_edit_input"
         android:name="com.github.anvo.piqwi.ui.fragments.EditInputFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         tools:layout="@layout/fragment_input" />
 
 </RelativeLayout>

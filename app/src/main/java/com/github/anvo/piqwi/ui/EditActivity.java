@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Round;
@@ -41,6 +42,7 @@ public class EditActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_edit);
+        this.setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         int playerIndex = this.getIntent().getIntExtra(EXTRA_PLAYER, INVALID);
