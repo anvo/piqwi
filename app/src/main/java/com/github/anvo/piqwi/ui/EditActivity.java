@@ -19,16 +19,17 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 package com.github.anvo.piqwi.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Round;
 import com.github.anvo.piqwi.logic.Value;
 import com.github.anvo.piqwi.ui.fragments.EditInputFragment;
 
-public class EditActivity extends ActionBarActivity 
+public class EditActivity extends AppCompatActivity
 {
 	public static final String EXTRA_ROUND = EditActivity.class.getName() + ".ROUND";
 	public static final String EXTRA_PLAYER = EditActivity.class.getName() + ".PLAYER";

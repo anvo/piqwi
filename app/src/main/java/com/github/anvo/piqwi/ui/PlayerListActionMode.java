@@ -22,9 +22,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.view.ActionMode;
-import android.support.v7.view.ActionMode.Callback;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,11 +29,14 @@ import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.appcompat.view.ActionMode;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Game;
 import com.github.anvo.piqwi.logic.Player;
 
-public class PlayerListActionMode implements Callback 
+public class PlayerListActionMode implements ActionMode.Callback
 {
 	private Game game = null;
 	private PlayerListAdapter playersAdapter = null;
@@ -93,7 +93,7 @@ public class PlayerListActionMode implements Callback
     			game.getPlayers().remove(position);
     			mode.finish();
     			Intent playerRemoveIntent = new Intent(LocalEvents.ACTION_PLAYER_REMOVE);
-    			LocalBroadcastManager.getInstance(this.activity).sendBroadcast(playerRemoveIntent);    			
+    			LocalBroadcastManager.getInstance(this.activity).sendBroadcast(playerRemoveIntent);
     			break;
 			}
     		case R.id.menu_list_players_up:

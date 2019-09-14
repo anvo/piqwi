@@ -25,9 +25,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +36,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Player;
 import com.github.anvo.piqwi.ui.GameActivity;
@@ -81,7 +83,7 @@ public class PlayersFragment extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 				action = new PlayerListActionMode(getActivity(), GameActivity.getGame(), playersAdapter, position,players);
-				((ActionBarActivity)getActivity()).startSupportActionMode(action);
+				((AppCompatActivity)getActivity()).startSupportActionMode(action);
 				return true;
 			}});	
     	players.setOnItemClickListener(new OnItemClickListener() {

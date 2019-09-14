@@ -19,8 +19,9 @@ along with PiQwi. If not, see <http://www.gnu.org/licenses/>.
 package com.github.anvo.piqwi.ui.fragments;
 
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.widget.TextView;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.github.anvo.piqwi.R;
 import com.github.anvo.piqwi.logic.Value;
