@@ -4,7 +4,6 @@
     <string name="title_rounds">Rounds</string>
     <string name="title_input">Input</string>
     <string name="title_players">Players</string>
-    <string name="menu_settings">Settings</string>
     <string name="title_activity_game">PiQwi</string>
     <string name="title_result">Result</string>
 	<string name="intput_currentround">Round %1$d</string>
@@ -16,7 +15,7 @@
     <string name="dialog_players_edit_title">Player: %1$s</string>
     <string name="dialog_restart_title">Restart</string>
     <string name="dialog_restart_message">Do you really want to restart the game?</string>
-    <string name="share_text">The result after %1$s rounds:\n\n%2$s\nPiQwi v%3$s</string>
+    <string name="share_text">The result after %1$d rounds:\n\n%2$s\nPiQwi v%3$s</string>
 	<string name="share_text_player">%1$d Points - %2$s\n</string>
 	<string name="share_subject">PiQwi Result</string>
 	<string name="menu_share">Share</string>

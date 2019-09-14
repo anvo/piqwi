@@ -58,6 +58,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class GameActivity extends AppCompatActivity {
 	
@@ -266,10 +267,10 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case PLAYERS_TAB: return getString(R.string.title_players).toUpperCase();
-                case INPUT_TAB: return getString(R.string.title_input).toUpperCase();
-                case ROUNDS_TAB: return getString(R.string.title_rounds).toUpperCase();
-                case RESULT_TAB: return getString(R.string.title_result).toUpperCase();
+                case PLAYERS_TAB: return getString(R.string.title_players).toUpperCase(Locale.getDefault());
+                case INPUT_TAB: return getString(R.string.title_input).toUpperCase(Locale.getDefault());
+                case ROUNDS_TAB: return getString(R.string.title_rounds).toUpperCase(Locale.getDefault());
+                case RESULT_TAB: return getString(R.string.title_result).toUpperCase(Locale.getDefault());
             }
             return null;
         }
