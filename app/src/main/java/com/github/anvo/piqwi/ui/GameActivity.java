@@ -94,6 +94,13 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_game);
+        // Targeting SDK 35+ forces edge-to-edge; keep content clear of system bars.
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+            androidx.core.graphics.Insets b = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars() | androidx.core.view.WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(b.left, b.top, b.right, b.bottom);
+            return androidx.core.view.WindowInsetsCompat.CONSUMED;
+        });
+
 
 		this.setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		this.getSupportActionBar().setLogo(R.drawable.ic_launcher);
@@ -142,9 +149,9 @@ public class GameActivity extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    	switch(item.getItemId())
+    	int id = item.getItemId();
+    	if (id == R.id.menu_restart)
     	{
-    		case R.id.menu_restart:
     			Builder builder = new AlertDialog.Builder(this);
     			builder.setTitle(this.getString(R.string.dialog_restart_title));
     			builder.setMessage(this.getString(R.string.dialog_restart_message));
@@ -159,7 +166,9 @@ public class GameActivity extends AppCompatActivity {
     			builder.setNegativeButton(android.R.string.no, null);
     			builder.show();    			
     		return true;
-    		case R.id.menu_share:
+    	}
+    	if (id == R.id.menu_share)
+    	{
     			Intent shareIntent = new Intent(Intent.ACTION_SEND);
     			shareIntent.setType("text/plain");
     			shareIntent.putExtra(Intent.EXTRA_SUBJECT, this.getString(R.string.share_subject));
