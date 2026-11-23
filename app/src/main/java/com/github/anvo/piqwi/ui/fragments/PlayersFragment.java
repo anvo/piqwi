@@ -130,9 +130,8 @@ public class PlayersFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) 
     {
-    	switch(item.getItemId())
+    	if (item.getItemId() == R.id.menu_players_addplayer)
     	{
-    		case R.id.menu_players_addplayer:
     			AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
     			final View layout = this.getActivity().getLayoutInflater().inflate(R.layout.dialog_player, null);
     			builder.setView(layout);

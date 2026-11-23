@@ -149,9 +149,9 @@ public class GameActivity extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    	switch(item.getItemId())
+    	int id = item.getItemId();
+    	if (id == R.id.menu_restart)
     	{
-    		case R.id.menu_restart:
     			Builder builder = new AlertDialog.Builder(this);
     			builder.setTitle(this.getString(R.string.dialog_restart_title));
     			builder.setMessage(this.getString(R.string.dialog_restart_message));
@@ -166,7 +166,9 @@ public class GameActivity extends AppCompatActivity {
     			builder.setNegativeButton(android.R.string.no, null);
     			builder.show();    			
     		return true;
-    		case R.id.menu_share:
+    	}
+    	if (id == R.id.menu_share)
+    	{
     			Intent shareIntent = new Intent(Intent.ACTION_SEND);
     			shareIntent.setType("text/plain");
     			shareIntent.putExtra(Intent.EXTRA_SUBJECT, this.getString(R.string.share_subject));

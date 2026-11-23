@@ -124,9 +124,8 @@ public class InputFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) 
     {
-    	switch(item.getItemId())
+    	if (item.getItemId() == R.id.menu_input_lasttile)
     	{
-    		case R.id.menu_input_lasttile:
     		{
     			this.onButtonNumberClick(6);
     			return true;

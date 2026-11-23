@@ -86,35 +86,31 @@ public class PlayerListActionMode implements ActionMode.Callback
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) 
 	{
-		switch(item.getItemId())
-		{
-			case R.id.menu_list_players_delete:
+		int id = item.getItemId();
+			if (id == R.id.menu_list_players_delete)
 			{
     			game.getPlayers().remove(position);
     			mode.finish();
     			Intent playerRemoveIntent = new Intent(LocalEvents.ACTION_PLAYER_REMOVE);
     			LocalBroadcastManager.getInstance(this.activity).sendBroadcast(playerRemoveIntent);
-    			break;
 			}
-    		case R.id.menu_list_players_up:
+    		else if (id == R.id.menu_list_players_up)
     		{
     			int next = position - 1;
     			if(next < 0)
     				next = this.game.getPlayers().size() -1;
    				swapPlayers(next, position);
    				this.updatePosition(next);
-    			break;
     		}
-			case R.id.menu_list_players_down:
+			else if (id == R.id.menu_list_players_down)
 			{
 				int next = position + 1;
     			if(next > (game.getPlayers().size() -1))
     				next = 0;
     			swapPlayers(next, position);
     			this.updatePosition(next);
-    			break;
 			}
-			case R.id.menu_list_players_edit:
+			else if (id == R.id.menu_list_players_edit)
 			{
     			final int playerId = position;
     			Player player = game.getPlayers().get(playerId);
@@ -139,9 +135,7 @@ public class PlayerListActionMode implements ActionMode.Callback
     			builder.setNegativeButton(android.R.string.cancel, null);
     			builder.create().show();    	
     			mode.finish();
-    			break;		
 			}
-		}		
 		playersAdapter.notifyDataSetChanged();
 		return true;
 	}
