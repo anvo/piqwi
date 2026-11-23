@@ -94,6 +94,13 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_game);
+        // Targeting SDK 35+ forces edge-to-edge; keep content clear of system bars.
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+            androidx.core.graphics.Insets b = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars() | androidx.core.view.WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(b.left, b.top, b.right, b.bottom);
+            return androidx.core.view.WindowInsetsCompat.CONSUMED;
+        });
+
 
 		this.setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		this.getSupportActionBar().setLogo(R.drawable.ic_launcher);
